@@ -52,3 +52,56 @@ const objectMapping = names.reduce((accumulator, name, index) => {
   return accumulator
 }, {});
 console.log(objectMapping);
+
+// Advanced Exercises 
+
+// Log Products
+console.log(products.map(item => item.product));
+
+// Filter by Name Length
+console.log(products.filter(item => item.product.length <= 5));
+
+// Price Manipulation
+console.log(
+  products
+    .filter(item => item.price && String(item.price).trim() !== "") // Convert prices to string & Remove products without prices
+    .map(item => parseFloat(item.price)) // Convert prices to numbers
+    .reduce((sum, price) => sum + price, 0) // Calculate the total price
+);
+
+// Concatenate Product Names
+console.log(
+  products.reduce((accumulator, item) => accumulator + item.product, "")
+);
+
+// Find Extremes in Prices
+console.log(
+  products
+  .filter(item => item.price && String(item.price).trim() !== "") // Convert prices to string & Remove products without prices
+  .reduce((accumulator, item) => {
+    const priceNum =  parseFloat(item.price); //convert price to number
+  
+  if (accumulator.highest === null || priceNum > accumulator.highest) {
+    accumulator.highest = priceNum; // Update highest price
+  }
+  if (accumulator.lowest === null || priceNum < accumulator.lowest) {
+    accumulator.lowest = priceNum; // Update lowest price
+  }
+  return accumulator;
+}, { highest: null, lowest: null }) // Initial values for highest and lowest
+  
+);
+
+// Object Transformation
+console.log(
+  products.reduce((accumulator, item) => {
+    // Check if the price is valid (non-empty and trimmed)
+    if (item.price && String(item.price).trim() !== "") {
+      accumulator[item.product] = {
+        name: item.product,
+        cost: parseFloat(item.price),
+      };
+    }
+    return accumulator;
+  }, {})
+);
